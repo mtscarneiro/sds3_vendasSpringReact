@@ -1,6 +1,10 @@
 package com.mtscarntech.desvendas.services;
 
+import java.util.List;
+
 import com.mtscarntech.desvendas.dto.SaleDTO;
+import com.mtscarntech.desvendas.dto.SaleSuccessDTO;
+import com.mtscarntech.desvendas.dto.SaleSumDTO;
 import com.mtscarntech.desvendas.entities.Sale;
 import com.mtscarntech.desvendas.repositories.SaleRepository;
 import com.mtscarntech.desvendas.repositories.SellerRepository;
@@ -25,6 +29,16 @@ public class SaleService {
         sellerRepository.findAll();
         Page<Sale> result = repository.findAll(pageable);
         return result.map(x -> new SaleDTO(x));
+    }
+
+    @Transactional(readOnly = true)
+    public List<SaleSumDTO> amountGroupedBySeller() {
+        return repository.amountGroupedBySeller();
+    }
+
+    @Transactional(readOnly = true)
+    public List<SaleSuccessDTO> successGroupedBySeller() {
+        return repository.successGroupedBySeller();
     }
 
 }
